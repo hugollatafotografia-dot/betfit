@@ -7,6 +7,7 @@ const PRIVATE_NAV_ITEMS = [
   { href: "/app", label: "Dashboard" },
   { href: "/app/clients", label: "Clients" },
   { href: "/app/services", label: "Services" },
+  { href: "/app/bookings", label: "Bookings" },
 ] as const;
 
 export function PrivateNav() {

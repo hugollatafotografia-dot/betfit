@@ -51,6 +51,67 @@ export type Database = {
           },
         ];
       };
+      bookings: {
+        Row: {
+          client_id: string;
+          created_at: string;
+          ends_at: string;
+          id: string;
+          notes: string | null;
+          organization_id: string;
+          service_id: string;
+          starts_at: string;
+          status: Database["public"]["Enums"]["booking_status"];
+          updated_at: string;
+        };
+        Insert: {
+          client_id: string;
+          created_at?: string;
+          ends_at: string;
+          id?: string;
+          notes?: string | null;
+          organization_id: string;
+          service_id: string;
+          starts_at: string;
+          status: Database["public"]["Enums"]["booking_status"];
+          updated_at?: string;
+        };
+        Update: {
+          client_id?: string;
+          created_at?: string;
+          ends_at?: string;
+          id?: string;
+          notes?: string | null;
+          organization_id?: string;
+          service_id?: string;
+          starts_at?: string;
+          status?: Database["public"]["Enums"]["booking_status"];
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "bookings_client_id_fkey";
+            columns: ["client_id"];
+            isOneToOne: false;
+            referencedRelation: "clients";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "bookings_organization_id_fkey";
+            columns: ["organization_id"];
+            isOneToOne: false;
+            referencedRelation: "organizations";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "bookings_service_id_fkey";
+            columns: ["service_id"];
+            isOneToOne: false;
+            referencedRelation: "services";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       clients: {
         Row: {
           assigned_user_id: string | null;
@@ -338,6 +399,7 @@ export type Database = {
       };
     };
     Enums: {
+      booking_status: "scheduled" | "completed" | "cancelled";
       client_status: "lead" | "active" | "inactive";
       member_role: "owner" | "admin" | "staff" | "client";
       member_status: "active" | "invited" | "disabled";
