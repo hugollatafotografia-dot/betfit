@@ -1,36 +1,79 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BETFIT SaaS Starter - Sprint 1
 
-## Getting Started
+Production-grade Sprint 1 foundation for a multi-tenant B2B2C SaaS:
 
-First, run the development server:
+- Next.js App Router + TypeScript (strict)
+- TailwindCSS
+- Supabase Auth + RLS
+- Modular domain architecture
+- Auth, onboarding, tenant membership, and RBAC foundations
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Folder Architecture
+
+```text
+src
+├─ app/          # Routes only (thin pages/layouts)
+├─ modules/      # Domain logic (auth, organizations)
+├─ lib/          # Shared config/helpers
+├─ services/     # External integrations (Supabase clients)
+├─ hooks/
+├─ components/   # Shared UI
+└─ types/        # Shared type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Sprint 1 Scope
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Implemented:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Email/password signup, login, logout
+- Session handling with Supabase SSR + middleware
+- Multi-tenant onboarding (create first organization)
+- Organization membership as dedicated join model
+- Role-ready foundation: `owner`, `admin`, `staff`, `client`
+- Protected app shell with server-side redirects
+- Audit logging for key actions
+- SQL schema + RLS policies for secure tenant isolation
 
-## Learn More
+## Database Migration
 
-To learn more about Next.js, take a look at the following resources:
+Migration file:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `supabase/migrations/20260320192000_sprint1_multitenant_auth.sql`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Apply with your Supabase workflow (for example Supabase CLI):
 
-## Deploy on Vercel
+```bash
+supabase db push
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Environment Variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Copy `.env.example` to `.env.local`:
+
+```bash
+cp .env.example .env.local
+```
+
+Required vars:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+No service role key is used in the client or exposed to the browser.
+
+## Scripts
+
+- `npm run dev`
+- `npm run build`
+- `npm run start`
+- `npm run lint`
+- `npm run lint:fix`
+- `npm run format`
+- `npm run format:check`
+
+## Local Run
+
+```bash
+npm install
+npm run dev
+```

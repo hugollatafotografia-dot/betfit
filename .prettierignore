@@ -1,0 +1,6 @@
+.next
+node_modules
+coverage
+dist
+AGENTS.md
+CLAUDE.md
