@@ -31,7 +31,7 @@ export function LoginForm() {
 
       <div className="space-y-2">
         <label htmlFor="password" className="block text-sm font-medium text-slate-700">
-          Password
+          Contraseña
         </label>
         <input
           id="password"
@@ -55,16 +55,16 @@ export function LoginForm() {
         className="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
         disabled={isPending}
       >
-        {isPending ? "Signing in..." : "Sign in"}
+        {isPending ? "Iniciando sesión..." : "Iniciar sesión"}
       </button>
 
       <p className="text-sm text-slate-600">
-        Don&apos;t have an account?{" "}
+        ¿No tienes cuenta?{" "}
         <Link
           href="/signup"
           className="font-medium text-slate-900 underline-offset-2 hover:underline"
         >
-          Create one
+          Crear cuenta
         </Link>
       </p>
     </form>

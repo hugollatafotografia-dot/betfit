@@ -4,13 +4,13 @@ export const onboardingSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(2, "Organization name must be at least 2 characters.")
-    .max(100, "Organization name must be 100 characters or less."),
+    .min(2, "El nombre de la organización debe tener al menos 2 caracteres.")
+    .max(100, "El nombre de la organización debe tener como máximo 100 caracteres."),
   vertical: z
     .string()
     .trim()
-    .min(2, "Vertical is required.")
-    .max(80, "Vertical must be 80 characters or less."),
+    .min(2, "El sector es obligatorio.")
+    .max(80, "El sector debe tener como máximo 80 caracteres."),
 });
 
 export type OnboardingInput = z.infer<typeof onboardingSchema>;

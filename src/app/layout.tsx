@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: APP_NAME,
-  description: "Production-ready SaaS starter built with Next.js and Supabase.",
+  description: "Base SaaS lista para producción construida con Next.js y Supabase.",
 };
 
 export default function RootLayout({
@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className="min-h-screen antialiased">
         <div className="flex min-h-screen flex-col">{children}</div>
       </body>

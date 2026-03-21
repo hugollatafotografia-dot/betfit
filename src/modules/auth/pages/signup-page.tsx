@@ -7,9 +7,9 @@ export async function SignupPage() {
 
   return (
     <AuthCard
-      title="Create your account"
-      description="Start by creating your secure owner account."
-      footer={<span>After login, you will create your first organization in onboarding.</span>}
+      title="Crea tu cuenta"
+      description="Empieza creando tu cuenta owner de forma segura."
+      footer={<span>Después del acceso, crearás tu primera organización en el onboarding.</span>}
     >
       <SignupForm />
     </AuthCard>

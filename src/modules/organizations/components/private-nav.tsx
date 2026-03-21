@@ -4,17 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const PRIVATE_NAV_ITEMS = [
-  { href: "/app", label: "Dashboard" },
-  { href: "/app/clients", label: "Clients" },
-  { href: "/app/services", label: "Services" },
-  { href: "/app/bookings", label: "Bookings" },
+  { href: "/app", label: "Panel" },
+  { href: "/app/team", label: "Equipo" },
+  { href: "/app/clients", label: "Clientes" },
+  { href: "/app/services", label: "Servicios" },
+  { href: "/app/bookings", label: "Reservas" },
 ] as const;
 
 export function PrivateNav() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Private navigation" className="border-t border-slate-200 bg-white/80">
+    <nav aria-label="Navegación privada" className="border-t border-slate-200 bg-white/80">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-2 px-6 py-3">
         {PRIVATE_NAV_ITEMS.map((item) => {
           const isActive =

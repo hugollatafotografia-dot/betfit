@@ -1,7 +1,6 @@
-import { ServicesPage } from "@/modules/services/pages/services-page";
+import { TeamPage } from "@/modules/team/pages/team-page";
 
 type SearchParams = {
-  created?: string | string[];
   updated?: string | string[];
   edit?: string | string[];
 };
@@ -24,8 +23,8 @@ function getSingleParam(value: string | string[] | undefined): string | null {
 
 export default async function Page({ searchParams }: PageProps) {
   const params = await Promise.resolve(searchParams ?? {});
-  const created = getSingleParam(params.created) === "1";
   const updated = getSingleParam(params.updated) === "1";
-  const editServiceId = getSingleParam(params.edit);
-  return <ServicesPage created={created} updated={updated} editServiceId={editServiceId} />;
+  const editMemberId = getSingleParam(params.edit);
+
+  return <TeamPage updated={updated} editMemberId={editMemberId} />;
 }

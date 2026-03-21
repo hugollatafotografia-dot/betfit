@@ -7,9 +7,9 @@ export async function LoginPage() {
 
   return (
     <AuthCard
-      title="Welcome back"
-      description="Sign in to access your tenant workspace."
-      footer={<span>Protected by Supabase Auth and server-side route guards.</span>}
+      title="Bienvenido de nuevo"
+      description="Inicia sesión para acceder a tu espacio de trabajo."
+      footer={<span>Protegido por Supabase Auth y guards del servidor.</span>}
     >
       <LoginForm />
     </AuthCard>

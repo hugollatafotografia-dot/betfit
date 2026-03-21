@@ -1,4 +1,5 @@
 export type ServiceField =
+  | "serviceId"
   | "name"
   | "description"
   | "serviceType"

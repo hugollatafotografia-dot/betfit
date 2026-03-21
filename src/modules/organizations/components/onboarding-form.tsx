@@ -14,7 +14,7 @@ export function OnboardingForm() {
     <form action={formAction} className="space-y-4" noValidate>
       <div className="space-y-2">
         <label htmlFor="name" className="block text-sm font-medium text-slate-700">
-          Organization name
+          Nombre de la organización
         </label>
         <input
           id="name"
@@ -29,14 +29,14 @@ export function OnboardingForm() {
 
       <div className="space-y-2">
         <label htmlFor="vertical" className="block text-sm font-medium text-slate-700">
-          Vertical
+          Sector
         </label>
         <input
           id="vertical"
           name="vertical"
           type="text"
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-slate-300 transition focus:ring-2"
-          placeholder="Wellness Studio"
+          placeholder="Estudio Wellness"
           required
         />
         {state.fieldErrors.vertical && (
@@ -51,7 +51,7 @@ export function OnboardingForm() {
         disabled={isPending}
         className="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isPending ? "Creating organization..." : "Create organization"}
+        {isPending ? "Creando organización..." : "Crear organización"}
       </button>
     </form>
   );

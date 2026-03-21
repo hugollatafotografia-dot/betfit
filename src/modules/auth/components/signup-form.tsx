@@ -14,7 +14,7 @@ export function SignupForm() {
     <form action={formAction} className="space-y-4" noValidate>
       <div className="space-y-2">
         <label htmlFor="fullName" className="block text-sm font-medium text-slate-700">
-          Full name (optional)
+          Nombre completo (opcional)
         </label>
         <input
           id="fullName"
@@ -47,7 +47,7 @@ export function SignupForm() {
 
       <div className="space-y-2">
         <label htmlFor="password" className="block text-sm font-medium text-slate-700">
-          Password
+          Contraseña
         </label>
         <input
           id="password"
@@ -77,16 +77,16 @@ export function SignupForm() {
         className="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
         disabled={isPending}
       >
-        {isPending ? "Creating account..." : "Create account"}
+        {isPending ? "Creando cuenta..." : "Crear cuenta"}
       </button>
 
       <p className="text-sm text-slate-600">
-        Already have an account?{" "}
+        ¿Ya tienes cuenta?{" "}
         <Link
           href="/login"
           className="font-medium text-slate-900 underline-offset-2 hover:underline"
         >
-          Sign in
+          Iniciar sesión
         </Link>
       </p>
     </form>

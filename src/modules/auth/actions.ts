@@ -26,7 +26,7 @@ export async function loginAction(
 
     return {
       status: "error",
-      message: "Please fix the highlighted fields.",
+      message: "Corrige los campos marcados.",
       fieldErrors: {
         email: errors.email?.[0],
         password: errors.password?.[0],
@@ -45,7 +45,7 @@ export async function loginAction(
     if (error || !data.user) {
       return {
         status: "error",
-        message: error?.message ?? "Invalid credentials.",
+        message: error?.message ?? "Credenciales inválidas.",
         fieldErrors: {},
       };
     }
@@ -86,7 +86,7 @@ export async function signupAction(
 
     return {
       status: "error",
-      message: "Please fix the highlighted fields.",
+      message: "Corrige los campos marcados.",
       fieldErrors: {
         fullName: errors.fullName?.[0],
         email: errors.email?.[0],
@@ -124,8 +124,7 @@ export async function signupAction(
 
     return {
       status: "success",
-      message:
-        "Account created. Check your email inbox to verify your account, then return to login.",
+      message: "Cuenta creada correctamente. Ya puedes iniciar sesión.",
       fieldErrors: {},
     };
   } catch (error: unknown) {

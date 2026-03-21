@@ -10,12 +10,12 @@ function isAuthError(error: unknown): error is AuthError {
 
 export function getSafeAuthErrorMessage(error: unknown): string {
   if (isFetchFailure(error)) {
-    return "Cannot reach Supabase Auth. Check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in .env.local, then restart npm run dev.";
+    return "No se puede conectar con Supabase Auth. Revisa NEXT_PUBLIC_SUPABASE_URL y NEXT_PUBLIC_SUPABASE_ANON_KEY en .env.local y reinicia npm run dev.";
   }
 
   if (isAuthError(error) && typeof error.message === "string" && error.message.trim().length > 0) {
     return error.message;
   }
 
-  return "Unexpected authentication error. Please try again.";
+  return "Error inesperado de autenticación. Inténtalo de nuevo.";
 }

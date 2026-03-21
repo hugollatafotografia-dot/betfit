@@ -1,1 +1,8 @@
-export type BookingField = "clientId" | "serviceId" | "status" | "startsAt" | "endsAt" | "notes";
+export type BookingField =
+  | "bookingId"
+  | "clientId"
+  | "serviceId"
+  | "status"
+  | "startsAt"
+  | "endsAt"
+  | "notes";

@@ -2,45 +2,59 @@
 
 import { useActionState } from "react";
 import { createInitialFormState } from "@/modules/auth/types";
-import { createBookingAction } from "@/modules/bookings/actions";
+import { updateBookingAction } from "@/modules/bookings/actions";
+import type {
+  BookingClientOption,
+  BookingRow,
+  BookingServiceOption,
+} from "@/modules/bookings/queries";
 import { bookingStatusOptions, getBookingStatusLabel } from "@/modules/bookings/schemas";
-import type { BookingClientOption, BookingServiceOption } from "@/modules/bookings/queries";
 import type { BookingField } from "@/modules/bookings/types";
-import { getServiceStatusLabel } from "@/modules/services/schemas";
 
 const initialState = createInitialFormState<BookingField>();
 
-type CreateBookingFormProps = {
+type EditBookingFormProps = {
+  booking: BookingRow;
   canManage: boolean;
-  hasDependencies: boolean;
   clientOptions: BookingClientOption[];
   serviceOptions: BookingServiceOption[];
 };
 
-export function CreateBookingForm({
+function toDateTimeLocalValue(value: string): string {
+  const date = new Date(value);
+  const timezoneOffsetInMs = date.getTimezoneOffset() * 60 * 1000;
+  const localDate = new Date(date.getTime() - timezoneOffsetInMs);
+  return localDate.toISOString().slice(0, 16);
+}
+
+export function EditBookingForm({
+  booking,
   canManage,
-  hasDependencies,
   clientOptions,
   serviceOptions,
-}: CreateBookingFormProps) {
-  const [state, formAction, isPending] = useActionState(createBookingAction, initialState);
-  const isDisabled = !canManage || !hasDependencies || isPending;
+}: EditBookingFormProps) {
+  const [state, formAction, isPending] = useActionState(updateBookingAction, initialState);
+  const isDisabled = !canManage || isPending;
 
   return (
     <form action={formAction} className="space-y-4" noValidate>
+      <input type="hidden" name="bookingId" value={booking.id} />
+
       <div className="space-y-2">
-        <label htmlFor="clientId" className="block text-sm font-medium text-slate-700">
+        <label
+          htmlFor={`clientId-${booking.id}`}
+          className="block text-sm font-medium text-slate-700"
+        >
           Cliente
         </label>
         <select
-          id="clientId"
+          id={`clientId-${booking.id}`}
           name="clientId"
-          defaultValue=""
+          defaultValue={booking.client_id}
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-slate-300 transition focus:ring-2"
           disabled={isDisabled}
           required
         >
-          <option value="">Selecciona cliente</option>
           {clientOptions.map((client) => (
             <option key={client.id} value={client.id}>
               {client.fullName}
@@ -53,21 +67,23 @@ export function CreateBookingForm({
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="serviceId" className="block text-sm font-medium text-slate-700">
+        <label
+          htmlFor={`serviceId-${booking.id}`}
+          className="block text-sm font-medium text-slate-700"
+        >
           Servicio
         </label>
         <select
-          id="serviceId"
+          id={`serviceId-${booking.id}`}
           name="serviceId"
-          defaultValue=""
+          defaultValue={booking.service_id}
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-slate-300 transition focus:ring-2"
           disabled={isDisabled}
           required
         >
-          <option value="">Selecciona servicio</option>
           {serviceOptions.map((service) => (
             <option key={service.id} value={service.id}>
-              {service.name} ({getServiceStatusLabel(service.status)})
+              {service.name}
             </option>
           ))}
         </select>
@@ -77,13 +93,16 @@ export function CreateBookingForm({
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="status" className="block text-sm font-medium text-slate-700">
+        <label
+          htmlFor={`status-${booking.id}`}
+          className="block text-sm font-medium text-slate-700"
+        >
           Estado
         </label>
         <select
-          id="status"
+          id={`status-${booking.id}`}
           name="status"
-          defaultValue="scheduled"
+          defaultValue={booking.status}
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-slate-300 transition focus:ring-2"
           disabled={isDisabled}
         >
@@ -100,13 +119,17 @@ export function CreateBookingForm({
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2">
-          <label htmlFor="startsAt" className="block text-sm font-medium text-slate-700">
+          <label
+            htmlFor={`startsAt-${booking.id}`}
+            className="block text-sm font-medium text-slate-700"
+          >
             Inicio
           </label>
           <input
-            id="startsAt"
+            id={`startsAt-${booking.id}`}
             name="startsAt"
             type="datetime-local"
+            defaultValue={toDateTimeLocalValue(booking.starts_at)}
             className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-slate-300 transition focus:ring-2"
             disabled={isDisabled}
             required
@@ -117,13 +140,17 @@ export function CreateBookingForm({
         </div>
 
         <div className="space-y-2">
-          <label htmlFor="endsAt" className="block text-sm font-medium text-slate-700">
+          <label
+            htmlFor={`endsAt-${booking.id}`}
+            className="block text-sm font-medium text-slate-700"
+          >
             Fin
           </label>
           <input
-            id="endsAt"
+            id={`endsAt-${booking.id}`}
             name="endsAt"
             type="datetime-local"
+            defaultValue={toDateTimeLocalValue(booking.ends_at)}
             className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-slate-300 transition focus:ring-2"
             disabled={isDisabled}
             required
@@ -135,13 +162,14 @@ export function CreateBookingForm({
       </div>
 
       <div className="space-y-2">
-        <label htmlFor="notes" className="block text-sm font-medium text-slate-700">
+        <label htmlFor={`notes-${booking.id}`} className="block text-sm font-medium text-slate-700">
           Notas (opcional)
         </label>
         <textarea
-          id="notes"
+          id={`notes-${booking.id}`}
           name="notes"
           rows={3}
+          defaultValue={booking.notes ?? ""}
           className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 outline-none ring-slate-300 transition focus:ring-2"
           disabled={isDisabled}
         />
@@ -157,7 +185,7 @@ export function CreateBookingForm({
         disabled={isDisabled}
         className="w-full rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {isPending ? "Creando reserva..." : "Crear reserva"}
+        {isPending ? "Guardando cambios..." : "Guardar cambios"}
       </button>
     </form>
   );

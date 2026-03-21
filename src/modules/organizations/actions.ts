@@ -29,7 +29,7 @@ export async function createOrganizationAction(
 
     return {
       status: "error",
-      message: "Please fix the highlighted fields.",
+      message: "Corrige los campos marcados.",
       fieldErrors: {
         name: errors.name?.[0],
         vertical: errors.vertical?.[0],
@@ -75,7 +75,7 @@ export async function createOrganizationAction(
     if (error.code !== "23505") {
       return {
         status: "error",
-        message: "Unable to create the organization. Please try again.",
+        message: "No se pudo crear la organización. Inténtalo de nuevo.",
         fieldErrors: {},
       };
     }
@@ -83,7 +83,7 @@ export async function createOrganizationAction(
 
   return {
     status: "error",
-    message: "Could not generate a unique organization slug. Please try again.",
+    message: "No se pudo generar un slug único para la organización. Inténtalo de nuevo.",
     fieldErrors: {},
   };
 }
