@@ -1,13 +1,15 @@
 {
-  "name": "betfit-app",
+  "name": "betfit-crm",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "typecheck": "tsc --noEmit",
     "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
+    "check": "npm run lint && npm run typecheck && npm run build",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },

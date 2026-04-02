@@ -1,79 +1,120 @@
-# BETFIT SaaS Starter - Sprint 1
+# BETFIT CRM (Sprint 1 Foundation)
 
-Production-grade Sprint 1 foundation for a multi-tenant B2B2C SaaS:
+BETFIT es un SaaS multi-tenant en construcción.  
+Este repositorio contiene la base del **CRM interno** (fase actual), construido con Next.js + TypeScript + Supabase.
 
-- Next.js App Router + TypeScript (strict)
-- TailwindCSS
-- Supabase Auth + RLS
-- Modular domain architecture
-- Auth, onboarding, tenant membership, and RBAC foundations
+## Estado Actual
 
-## Folder Architecture
+Incluido en esta fase:
 
-```text
-src
-├─ app/          # Routes only (thin pages/layouts)
-├─ modules/      # Domain logic (auth, organizations)
-├─ lib/          # Shared config/helpers
-├─ services/     # External integrations (Supabase clients)
-├─ hooks/
-├─ components/   # Shared UI
-└─ types/        # Shared type definitions
-```
+- Auth: signup / login / logout
+- Onboarding de organización (tenant inicial)
+- Workspace privado con navegación interna
+- Módulos CRM base: `team`, `clients`, `services`, `bookings`
+- Supabase con RLS y migraciones SQL
 
-## Sprint 1 Scope
+No incluido aún:
 
-Implemented:
+- Web pública comercial
+- Plataforma completa para entrenadores
+- App final para clientes de entrenadores
 
-- Email/password signup, login, logout
-- Session handling with Supabase SSR + middleware
-- Multi-tenant onboarding (create first organization)
-- Organization membership as dedicated join model
-- Role-ready foundation: `owner`, `admin`, `staff`, `client`
-- Protected app shell with server-side redirects
-- Audit logging for key actions
-- SQL schema + RLS policies for secure tenant isolation
+## Requisitos
 
-## Database Migration
+- Node.js `>=20`
+- npm `>=10`
 
-Migration file:
+## Setup Local (menos de 10 minutos)
 
-- `supabase/migrations/20260320192000_sprint1_multitenant_auth.sql`
-
-Apply with your Supabase workflow (for example Supabase CLI):
+1. Instalar dependencias:
 
 ```bash
-supabase db push
+npm ci
 ```
 
-## Environment Variables
-
-Copy `.env.example` to `.env.local`:
+2. Configurar variables de entorno:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Required vars:
+3. Completar `.env.local`:
 
 - `NEXT_PUBLIC_SUPABASE_URL`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-No service role key is used in the client or exposed to the browser.
+4. Ejecutar en local:
+
+```bash
+npm run dev
+```
+
+5. Abrir:
+
+- http://localhost:3000
 
 ## Scripts
 
-- `npm run dev`
-- `npm run build`
-- `npm run start`
-- `npm run lint`
-- `npm run lint:fix`
-- `npm run format`
-- `npm run format:check`
+- `npm run dev`: entorno local
+- `npm run build`: build de producción
+- `npm run start`: ejecutar build generado
+- `npm run lint`: ESLint (sin warnings permitidos)
+- `npm run lint:fix`: ESLint con autocorrección
+- `npm run typecheck`: TypeScript sin emitir artefactos
+- `npm run check`: validación completa (`lint` + `typecheck` + `build`)
+- `npm run format`: Prettier write
+- `npm run format:check`: Prettier check
 
-## Local Run
+## Estructura del Proyecto
+
+```text
+.
+├─ src/
+│  ├─ app/         # rutas App Router (capas finas)
+│  ├─ modules/     # lógica por dominio CRM
+│  ├─ services/    # integraciones externas (Supabase SSR/browser)
+│  ├─ lib/         # utilidades compartidas y configuración
+│  ├─ components/  # UI compartida transversal
+│  ├─ hooks/       # hooks reutilizables
+│  └─ types/       # tipos compartidos (incluye tipos DB)
+├─ supabase/
+│  └─ migrations/  # esquema SQL + RLS
+├─ docs/           # documentación técnica del producto
+└─ .github/
+   └─ workflows/   # CI
+```
+
+## Base de Datos y Migraciones
+
+Migraciones actuales:
+
+- `20260320192000_sprint1_multitenant_auth.sql`
+- `20260321120000_sprint2_clients_services_workspace.sql`
+- `20260321130000_sprint3_bookings_foundation.sql`
+
+Aplicación recomendada (con Supabase CLI):
 
 ```bash
-npm install
-npm run dev
+supabase db push
 ```
+
+## CI
+
+Hay una pipeline en GitHub Actions: `.github/workflows/ci.yml`.
+
+Valida en cada push/pull_request:
+
+- instalación (`npm ci`)
+- lint (`npm run lint`)
+- typecheck (`npm run typecheck`)
+- build (`npm run build`)
+
+## Troubleshooting Rápido
+
+- Error de variables de entorno: revisa `.env.local` y reinicia `npm run dev`.
+- `eslint: command not found`: ejecuta `npm ci`.
+- Error de conexión a Supabase: valida URL/anon key y que el proyecto remoto esté activo.
+
+## Documentación Técnica
+
+- Arquitectura del CRM: `docs/architecture-crm.md`
